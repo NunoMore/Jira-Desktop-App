@@ -1,10 +1,8 @@
 ﻿using System;
-using System.DirectoryServices;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
-using JiraSolution.DesktopApp.Domain;
 
 namespace JiraSolution.DesktopApp.Services
 {

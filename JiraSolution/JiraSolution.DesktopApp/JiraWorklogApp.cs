@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using JiraSolution.DesktopApp.Domain;
 using JiraSolution.DesktopApp.Services;
 
 namespace JiraSolution.DesktopApp
@@ -22,8 +21,6 @@ namespace JiraSolution.DesktopApp
 		private string password;
 		private string projectName;
 		private string issueName;
-
-		private Project project = new Project();
 
 
 		private void ButtonIssues_Click(object sender, EventArgs e)

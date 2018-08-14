@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using JiraSolution.DesktopApp.Domain;
 
 namespace JiraSolution.DesktopApp
 {
@@ -44,13 +43,10 @@ namespace JiraSolution.DesktopApp
 			this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.TextBoxIssue = new System.Windows.Forms.TextBox();
-			this.dataGrid = new System.Windows.Forms.DataGridView();
 			this.programBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-			this.Issue = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource2)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -141,32 +137,15 @@ namespace JiraSolution.DesktopApp
 			this.TextBoxIssue.TabIndex = 8;
 			this.TextBoxIssue.TextChanged += new System.EventHandler(this.TextBoxIssue_TextChanged);
 			// 
-			// dataGrid
-			// 
-			this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Issue});
-			this.dataGrid.Location = new System.Drawing.Point(30, 201);
-			this.dataGrid.Name = "dataGrid";
-			this.dataGrid.Size = new System.Drawing.Size(240, 150);
-			this.dataGrid.TabIndex = 10;
-			// 
 			// programBindingSource2
 			// 
 			this.programBindingSource2.DataSource = typeof(JiraSolution.DesktopApp.Program);
-			// 
-			// Issue
-			// 
-			this.Issue.HeaderText = "Issue Name";
-			this.Issue.Name = "Issue";
-			this.Issue.ReadOnly = true;
 			// 
 			// JiraWorklogApp
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(586, 450);
-			this.Controls.Add(this.dataGrid);
 			this.Controls.Add(this.textBox4);
 			this.Controls.Add(this.TextBoxIssue);
 			this.Controls.Add(this.textBox3);
@@ -181,7 +160,6 @@ namespace JiraSolution.DesktopApp
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource2)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -202,9 +180,7 @@ namespace JiraSolution.DesktopApp
 		private System.Windows.Forms.BindingSource projectBindingSource;
 		private System.Windows.Forms.TextBox textBox4;
 		private System.Windows.Forms.TextBox TextBoxIssue;
-		private System.Windows.Forms.DataGridView dataGrid;
 		private BindingSource programBindingSource2;
-		private DataGridViewTextBoxColumn Issue;
 	}
 }
 
