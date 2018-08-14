@@ -1,0 +1,13 @@
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\JiraSolution.DesktopApp.exe.config
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\JiraSolution.DesktopApp.exe
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\JiraSolution.DesktopApp.pdb
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.csprojAssemblyReference.cache
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.Properties.Resources.resources
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.csproj.GenerateResource.cache
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.csproj.CoreCompileInputs.cache
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.exe
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.pdb
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.csproj.CopyComplete
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.JiraWorklogApp.resources
