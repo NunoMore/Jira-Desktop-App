@@ -22,7 +22,9 @@ namespace JiraSolution.DesktopApp
 
 		private void ButtonUsers_Click(object sender, EventArgs e)
 		{
+			Cursor.Current = Cursors.WaitCursor;
 			dataGridEditor.PopulateDataGrid(dataGridIssuesOrWorklog, username, password, projectName, userName);
+			Cursor.Current = Cursors.Default;
 		}
 
 		private void TextBoxUsername_TextChanged(object sender, EventArgs e)

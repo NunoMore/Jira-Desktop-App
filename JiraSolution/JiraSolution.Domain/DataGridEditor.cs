@@ -13,15 +13,17 @@ namespace JiraSolution.Domain
 		private BindingSource _bindingSource = new BindingSource();
 		private List<User> users = new List<User>();
 
-		private string _username;
-		private string _password;
-		private string _projectName;
+		private string _username = "nuno.moreira@glintt.com";
+		private string _password = "$Nuno93$";
+		private string _projectName = "B2BSD";
 		private string _userName;
 
 		private const string Url = "https://glinttdev.atlassian.net/rest/api/latest/";
 
 		public void PopulateDataGrid(DataGridView dataGridIssuesOrWorklog, string username, string password, string projectName, string userName)
 		{
+			users.Clear();
+
 			_username = username;
 			_password = password;
 			_projectName = projectName;
@@ -31,8 +33,8 @@ namespace JiraSolution.Domain
 
 			if (!string.IsNullOrEmpty(restQueryResult))
 			{
-				int maxIssues = Convert.ToInt32(findValuesInRestQueryResult('"' + "total" + '"' + ": ", restQueryResult));
-				int maxResults = Convert.ToInt32(findValuesInRestQueryResult('"' + "maxResults" + '"' + ": ", restQueryResult));
+				int maxIssues = Convert.ToInt32(findValuesInRestQueryResult("total", restQueryResult));
+				int maxResults = Convert.ToInt32(findValuesInRestQueryResult("maxResults", restQueryResult));
 
 				int startAt = 0;
 				int maxPages = (maxIssues + maxResults + 1) / maxResults;
@@ -54,8 +56,8 @@ namespace JiraSolution.Domain
 					_bindingSource.Add(user);
 				}
 
-				dataGridIssuesOrWorklog.Columns.Clear();
-				dataGridIssuesOrWorklog.AutoGenerateColumns = false;
+				// dataGridIssuesOrWorklog.Columns.Clear();
+				// dataGridIssuesOrWorklog.AutoGenerateColumns = false;
 				dataGridIssuesOrWorklog.AutoSize = true;
 				dataGridIssuesOrWorklog.DataSource = _bindingSource;
 			}
@@ -64,71 +66,82 @@ namespace JiraSolution.Domain
 
 		private List<User> getUsers(string restQueryResult, List<User> users)
 		{
-			string issues = restQueryResult.Substring(restQueryResult.IndexOf('"' + "expand" + '"' + ": ") + 7);
+			string issues = restQueryResult.Substring(restQueryResult.IndexOf("expand") + 7);
 			
-			int maxResults = Convert.ToInt32(findValuesInRestQueryResult('"' + "maxResults" + '"' + ": ", restQueryResult));
-
-
+			int maxResults = Convert.ToInt32(findValuesInRestQueryResult("maxResults", restQueryResult));
+			
 			for (int i = 0; i < maxResults; i++)
 			{
 				try
 				{
-					issues = issues.Substring(issues.IndexOf('"' + "expand" + '"' + ": ") + 7);
+					issues = issues.Substring(issues.IndexOf("expand") + 7);
 				}
 				catch (Exception e)
 				{
 					break;
 				}
 
-				if (findValuesInRestQueryResult('"' + "timespent" + '"' + ": ", issues) != "null")
+				if (findValuesInRestQueryResult("timespent", issues) != "null")
 				{
-					string issueName = findValuesInRestQueryResult('"' + "key" + '"' + ": ", issues);
-					issueName = issueName.Substring(1, issueName.Length-2);
+					string issueName = findValuesInRestQueryResult("key", issues);
 
 					string worklogs = _requester.Get(Url + "issue/" + issueName + "?fields=worklog", _username, _password);
 
-					int maxResultsWorklogs = Convert.ToInt32(findValuesInRestQueryResult('"' + "maxResults" + '"' + ": ", worklogs));
+					int totalWorklogs = Convert.ToInt32(findValuesInRestQueryResult("total", worklogs));
 
-					for (int t = 0; t < maxResultsWorklogs; t++)
+					for (int t = 0; t < totalWorklogs; t++)
 					{
 						try
 						{
-							worklogs = worklogs.Substring(worklogs.IndexOf('"' + "author" + '"' + ": ") + 7);
+							worklogs = worklogs.Substring(worklogs.IndexOf("author") + 7);
 						}
 						catch (Exception e)
 						{
 							continue;
 						}
 
-						Worklog newWorklog = new Worklog();
+						//Worklog newWorklog = new Worklog();
 
-						newWorklog.Id = findValuesInRestQueryResult('"' + "id" + '"' + ": ", worklogs);
-						newWorklog.IssueName = issueName;
-						newWorklog.Description = findValuesInRestQueryResult('"' + "comment" + '"' + ": ", worklogs);
-						newWorklog.LogTime = Convert.ToDouble(findValuesInRestQueryResult('"' + "timeSpentSeconds" + '"' + ": ", worklogs));
-						
-						User newUser = new User();
+						//newWorklog.Id = findValuesInRestQueryResult('"' + "id" + '"' + ": ", worklogs);
+						//newWorklog.IssueName = issueName;
+						//newWorklog.Description = findValuesInRestQueryResult('"' + "comment" + '"' + ": ", worklogs);
+						//newWorklog.LogTime = Convert.ToDouble(findValuesInRestQueryResult('"' + "timeSpentSeconds" + '"' + ": ", worklogs));
 
-						if (users.Find(user => user.Name == findValuesInRestQueryResult('"' + "displayName" + '"' + ": ", worklogs)) == null)
+						// Se não existe user cria-se um novo
+						if (users.Find(user => user.Name == findValuesInRestQueryResult("displayName", worklogs)) == null)
 						{
-							newUser.Name = findValuesInRestQueryResult('"' + "displayName" + '"' + ": ", worklogs);
-							newUser.Photo = findValuesInRestQueryResult('"' + "48x48" + '"' + ": ", worklogs);
-							newUser.TotalWorklog = Convert.ToDouble(findValuesInRestQueryResult('"' + "timeSpentSeconds" + '"' + ": ", worklogs));
+							User newUser = new User
+							{
+								Name = findValuesInRestQueryResult("displayName", worklogs),
+								Photo = findValuesInRestQueryResult("48x48", worklogs),
+								Worklog = new Dictionary<string, List<int>>
+								{
+									{issueName, new List<int>()}
+								}
+							};
+
+							newUser.Worklog[issueName].Add(Convert.ToInt32(findValuesInRestQueryResult("timeSpentSeconds", worklogs)));
 							users.Add(newUser);
 						}
-						else
+						else // Se existir é necessário atualizar
 						{
-							newUser = users.Find(
-								user => user.Name == findValuesInRestQueryResult('"' + "displayName" + '"' + ": ", worklogs));
-							users.Find(
-									user => user.Name == findValuesInRestQueryResult('"' + "displayName" + '"' + ": ", worklogs)).TotalWorklog +=
-								Convert.ToDouble(findValuesInRestQueryResult('"' + "timeSpentSeconds" + '"' + ": ", worklogs));
-						}
+							// Se o User não contém ainda o issue cria-se um novo
+							if (!users.Find(user => user.Name == findValuesInRestQueryResult("displayName", worklogs))
+								.Worklog.ContainsKey(issueName))
+							{
+								users.Find(user => user.Name == findValuesInRestQueryResult("displayName", worklogs))
+									.Worklog.Add(issueName, new List<int>());
 
-						newWorklog.User = newUser;
+							}
+
+							users.Find(user => user.Name == findValuesInRestQueryResult("displayName", worklogs))
+								.Worklog[issueName].Add(Convert.ToInt32(findValuesInRestQueryResult("timeSpentSeconds", worklogs)));
+						}
 					}
 				}
 			}
+
+			users.ForEach(x => x.UpdateTotalWorklog());
 
 			return users;
 		}
@@ -138,7 +151,13 @@ namespace JiraSolution.Domain
 			try
 			{
 				int startIndex = restQueryResult.IndexOf(dataToFind);
-				string result = restQueryResult.Substring(startIndex + dataToFind.Length, restQueryResult.IndexOf(",", startIndex) - startIndex + dataToFind.Length);
+				string result = restQueryResult.Substring(startIndex + dataToFind.Length +2, restQueryResult.IndexOf(",", startIndex) - (startIndex + dataToFind.Length +2));
+
+				if (int.TryParse(result, out int n))
+				{
+					return result;
+				}
+
 				return result.Substring(1, result.Length - 2);
 
 			}
