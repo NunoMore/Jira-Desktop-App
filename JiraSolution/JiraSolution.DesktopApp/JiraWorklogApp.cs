@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using JiraSolution.DesktopApp.Services;
+using JiraSolution.Domain;
+using JiraSolution.Services;
+using DataGrid = JiraSolution.Domain.DataGridEditor;
 
 namespace JiraSolution.DesktopApp
 {
@@ -11,25 +13,20 @@ namespace JiraSolution.DesktopApp
 			InitializeComponent();
 		}
 
-		private const string Url = "https://glinttdev.atlassian.net/rest/api/2/";
-		// private const string Url2 = "https://glinttdev.atlassian.net/rest/api/2/search?jql=project=B2Bsd";
-		// private const string url3 = "https://glinttdev.atlassian.net/rest/api/2/issue/B2BMSFT-66?fields=worklog";
-
-		private GetRequest getRequest = new GetRequest();
+		private DataGridEditor dataGridEditor = new DataGridEditor();
 
 		private string username;
 		private string password;
 		private string projectName;
-		private string issueName;
+		private string userName;
 
-
-		private void ButtonIssues_Click(object sender, EventArgs e)
+		private void ButtonUsers_Click(object sender, EventArgs e)
 		{
-			string result = getRequest.Get(Url + "search?jql=project=" + projectName, username, password);
-			
-
+			Cursor.Current = Cursors.WaitCursor;
+			dataGridEditor.PopulateDataGrid(dataGridIssuesOrWorklog, username, password, projectName, userName);
+			Cursor.Current = Cursors.Default;
 		}
-		
+
 		private void TextBoxUsername_TextChanged(object sender, EventArgs e)
 		{
 			TextBox s = (TextBox)sender;
@@ -43,18 +40,17 @@ namespace JiraSolution.DesktopApp
 		}
 
 
-		private void TextBoxIssue_TextChanged(object sender, EventArgs e)
-		{
-			TextBox s = (TextBox)sender;
-			issueName = s.Text;
-		}
-
 		private void TextBoxProject_TextChanged(object sender, EventArgs e)
 		{
 			TextBox s = (TextBox)sender;
 			projectName = s.Text;
 		}
-	}
 
+		private void TextBoxUser_TextChanged(object sender, EventArgs e)
+		{
+			TextBox s = (TextBox)sender;
+			userName = s.Text;
+		}
+	}
 }
 

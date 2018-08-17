@@ -11,3 +11,12 @@ C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\Ji
 C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\Newtonsoft.Json.xml
 C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.csproj.CopyComplete
 C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.JiraWorklogApp.resources
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\JiraSolution.Domain.dll
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\JiraSolution.Services2.dll
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\JiraSolution.Domain.pdb
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\JiraSolution.Services2.pdb
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\Interop.MSTSCLib.dll
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\bin\Debug\AxInterop.MSTSCLib.dll
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\Interop.MSTSCLib.dll
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\AxInterop.MSTSCLib.dll
+C:\Users\nuno\Desktop\JiraWorklogGetter\Jira_worklog_getter1\Jira_get_worklog\JiraSolution\JiraSolution.DesktopApp\obj\Debug\JiraSolution.DesktopApp.csproj.ResolveComReference.cache

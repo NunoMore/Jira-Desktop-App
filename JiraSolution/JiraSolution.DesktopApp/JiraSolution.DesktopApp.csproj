@@ -57,7 +57,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\GetRequest.cs" />
     <EmbeddedResource Include="JiraWorklogApp.resx">
       <DependentUpon>JiraWorklogApp.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,7 +87,33 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Domain\" />
+    <COMReference Include="AxMSTSCLib">
+      <Guid>{8C11EFA1-92C3-11D1-BC1E-00C04FA31489}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="MSTSCLib">
+      <Guid>{8C11EFA1-92C3-11D1-BC1E-00C04FA31489}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JiraSolution.Domain\JiraSolution.Domain.csproj">
+      <Project>{c2f5e851-d006-4715-93c0-b6606397901a}</Project>
+      <Name>JiraSolution.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JiraSolution.Services2\JiraSolution.Services.csproj">
+      <Project>{b215050f-45c5-4530-87e7-1d1b781b14ed}</Project>
+      <Name>JiraSolution.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
