@@ -141,7 +141,7 @@ namespace JiraSolution.Domain
 				}
 			}
 
-			users.ForEach(x => x.UpdateTotalWorklog());
+			// users.ForEach(x => x.UpdateTotalWorklog());
 
 			return users;
 		}

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using JiraSolution.Domain;
-using JiraSolution.Services;
 using DataGrid = JiraSolution.Domain.DataGridEditor;
 
 namespace JiraSolution.DesktopApp

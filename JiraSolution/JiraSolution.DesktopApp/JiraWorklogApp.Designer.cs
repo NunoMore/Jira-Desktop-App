@@ -38,18 +38,18 @@ namespace JiraSolution.DesktopApp
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.TextBoxProject = new System.Windows.Forms.TextBox();
-			this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.programBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
 			this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.programBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
 			this.dataGridIssuesOrWorklog = new System.Windows.Forms.DataGridView();
 			this.TextUser = new System.Windows.Forms.TextBox();
 			this.TextBoxUser = new System.Windows.Forms.TextBox();
-			((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).BeginInit();
+			this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.programBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.programBindingSource2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridIssuesOrWorklog)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.programBindingSource2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ButtonUsers
@@ -60,7 +60,6 @@ namespace JiraSolution.DesktopApp
 			this.ButtonUsers.TabIndex = 0;
 			this.ButtonUsers.Text = "Get Users";
 			this.ButtonUsers.UseVisualStyleBackColor = true;
-			this.ButtonUsers.UseWaitCursor = true;
 			this.ButtonUsers.Click += new System.EventHandler(this.ButtonUsers_Click);
 			// 
 			// TextBoxUsername
@@ -69,7 +68,6 @@ namespace JiraSolution.DesktopApp
 			this.TextBoxUsername.Name = "TextBoxUsername";
 			this.TextBoxUsername.Size = new System.Drawing.Size(140, 20);
 			this.TextBoxUsername.TabIndex = 1;
-			this.TextBoxUsername.UseWaitCursor = true;
 			this.TextBoxUsername.TextChanged += new System.EventHandler(this.TextBoxUsername_TextChanged);
 			// 
 			// TextBoxPassword
@@ -79,7 +77,6 @@ namespace JiraSolution.DesktopApp
 			this.TextBoxPassword.PasswordChar = '*';
 			this.TextBoxPassword.Size = new System.Drawing.Size(140, 20);
 			this.TextBoxPassword.TabIndex = 2;
-			this.TextBoxPassword.UseWaitCursor = true;
 			this.TextBoxPassword.TextChanged += new System.EventHandler(this.TextBoxPassword_TextChanged);
 			// 
 			// textBox2
@@ -91,7 +88,6 @@ namespace JiraSolution.DesktopApp
 			this.textBox2.Size = new System.Drawing.Size(140, 13);
 			this.textBox2.TabIndex = 4;
 			this.textBox2.Text = "Atlassian Username:";
-			this.textBox2.UseWaitCursor = true;
 			// 
 			// textBox1
 			// 
@@ -102,7 +98,6 @@ namespace JiraSolution.DesktopApp
 			this.textBox1.Size = new System.Drawing.Size(140, 13);
 			this.textBox1.TabIndex = 5;
 			this.textBox1.Text = "Atlassian Password:";
-			this.textBox1.UseWaitCursor = true;
 			// 
 			// textBox3
 			// 
@@ -113,7 +108,6 @@ namespace JiraSolution.DesktopApp
 			this.textBox3.Size = new System.Drawing.Size(140, 13);
 			this.textBox3.TabIndex = 7;
 			this.textBox3.Text = "Project:";
-			this.textBox3.UseWaitCursor = true;
 			// 
 			// TextBoxProject
 			// 
@@ -121,16 +115,7 @@ namespace JiraSolution.DesktopApp
 			this.TextBoxProject.Name = "TextBoxProject";
 			this.TextBoxProject.Size = new System.Drawing.Size(140, 20);
 			this.TextBoxProject.TabIndex = 6;
-			this.TextBoxProject.UseWaitCursor = true;
 			this.TextBoxProject.TextChanged += new System.EventHandler(this.TextBoxProject_TextChanged);
-			// 
-			// programBindingSource
-			// 
-			this.programBindingSource.DataSource = typeof(JiraSolution.DesktopApp.Program);
-			// 
-			// programBindingSource2
-			// 
-			this.programBindingSource2.DataSource = typeof(JiraSolution.DesktopApp.Program);
 			// 
 			// dataGridIssuesOrWorklog
 			// 
@@ -139,7 +124,6 @@ namespace JiraSolution.DesktopApp
 			this.dataGridIssuesOrWorklog.Name = "dataGridIssuesOrWorklog";
 			this.dataGridIssuesOrWorklog.Size = new System.Drawing.Size(513, 180);
 			this.dataGridIssuesOrWorklog.TabIndex = 11;
-			this.dataGridIssuesOrWorklog.UseWaitCursor = true;
 			// 
 			// TextUser
 			// 
@@ -150,7 +134,6 @@ namespace JiraSolution.DesktopApp
 			this.TextUser.Size = new System.Drawing.Size(140, 13);
 			this.TextUser.TabIndex = 13;
 			this.TextUser.Text = "User: (optional)";
-			this.TextUser.UseWaitCursor = true;
 			// 
 			// TextBoxUser
 			// 
@@ -158,8 +141,15 @@ namespace JiraSolution.DesktopApp
 			this.TextBoxUser.Name = "TextBoxUser";
 			this.TextBoxUser.Size = new System.Drawing.Size(140, 20);
 			this.TextBoxUser.TabIndex = 12;
-			this.TextBoxUser.UseWaitCursor = true;
 			this.TextBoxUser.TextChanged += new System.EventHandler(this.TextBoxUser_TextChanged);
+			// 
+			// programBindingSource
+			// 
+			this.programBindingSource.DataSource = typeof(JiraSolution.DesktopApp.Program);
+			// 
+			// programBindingSource2
+			// 
+			this.programBindingSource2.DataSource = typeof(JiraSolution.DesktopApp.Program);
 			// 
 			// JiraWorklogApp
 			// 
@@ -178,12 +168,11 @@ namespace JiraSolution.DesktopApp
 			this.Controls.Add(this.ButtonUsers);
 			this.Name = "JiraWorklogApp";
 			this.Text = "Jira Worklog App";
-			this.UseWaitCursor = true;
-			((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.programBindingSource2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridIssuesOrWorklog)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.programBindingSource2)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

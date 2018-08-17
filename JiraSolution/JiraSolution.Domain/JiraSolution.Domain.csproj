@@ -43,12 +43,11 @@
   <ItemGroup>
     <Compile Include="Objects\User.cs" />
     <Compile Include="DataGridEditor.cs" />
-    <Compile Include="Objects\Worklog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JiraSolution.Services2\JiraSolution.Services.csproj">
-      <Project>{B215050F-45C5-4530-87E7-1D1B781B14ED}</Project>
+    <ProjectReference Include="..\JiraSolution.Services\JiraSolution.Services.csproj">
+      <Project>{3CAA9259-A5BC-4D1A-A9C5-E3A153B26EFB}</Project>
       <Name>JiraSolution.Services</Name>
     </ProjectReference>
   </ItemGroup>
