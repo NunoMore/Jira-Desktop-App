@@ -45,6 +45,7 @@ namespace JiraSolution.DesktopApp
 			this.TextBoxUser = new System.Windows.Forms.TextBox();
 			this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.programBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridIssuesOrWorklog)).BeginInit();
@@ -143,13 +144,9 @@ namespace JiraSolution.DesktopApp
 			this.TextBoxUser.TabIndex = 12;
 			this.TextBoxUser.TextChanged += new System.EventHandler(this.TextBoxUser_TextChanged);
 			// 
-			// programBindingSource
+			// backgroundWorker1
 			// 
-			this.programBindingSource.DataSource = typeof(JiraSolution.DesktopApp.Program);
-			// 
-			// programBindingSource2
-			// 
-			this.programBindingSource2.DataSource = typeof(JiraSolution.DesktopApp.Program);
+			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
 			// 
 			// JiraWorklogApp
 			// 
@@ -194,6 +191,7 @@ namespace JiraSolution.DesktopApp
 		private DataGridView dataGridIssuesOrWorklog;
 		private TextBox TextUser;
 		private TextBox TextBoxUser;
+		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 	}
 }
 

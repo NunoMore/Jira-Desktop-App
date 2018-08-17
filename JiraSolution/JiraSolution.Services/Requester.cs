@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Security.Policy;
 using System.Text;
 using System.Windows.Forms;
 
@@ -8,7 +9,31 @@ namespace JiraSolution.Services
 {
 	public class Requester
 	{
-		public string Get(string uri, string username, string password)
+		private readonly string _username;
+		private readonly string _password;
+
+		public Requester(string username, string password)
+		{
+			_username = username;
+			_password = password;
+		}
+
+		public string GetFirstIssues(string uri, string projectName)
+		{
+			return Get(uri + "search?jql=project=" + projectName, _username, _password);
+		}
+
+		public string GetMoreIssues(string uri, string projectName, int startAt)
+		{
+			return Get(uri + "search?jql=project=" + projectName + "&startAt=" + startAt, _username, _password);
+		}
+
+		public string GetWorklogs(string uri, string issueName)
+		{
+			return Get(uri + "issue/" + issueName + "?fields=worklog", _username, _password);
+		}
+
+		private static string Get(string uri, string username, string password)
 		{
 			try
 			{

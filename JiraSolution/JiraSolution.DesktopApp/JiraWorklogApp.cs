@@ -1,7 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
-using JiraSolution.Domain;
-using DataGrid = JiraSolution.Domain.DataGridEditor;
+using JiraSolution.Services;
 
 namespace JiraSolution.DesktopApp
 {
@@ -12,43 +12,50 @@ namespace JiraSolution.DesktopApp
 			InitializeComponent();
 		}
 
-		private DataGridEditor dataGridEditor = new DataGridEditor();
-
-		private string username;
-		private string password;
-		private string projectName;
-		private string userName;
+		private string _username;
+		private string _password;
+		private string _projectName;
+		private string _userName;
 
 		private void ButtonUsers_Click(object sender, EventArgs e)
 		{
+			Runner runner = new Runner(_username, _password, dataGridIssuesOrWorklog, _projectName, _userName);
+
 			Cursor.Current = Cursors.WaitCursor;
-			dataGridEditor.PopulateDataGrid(dataGridIssuesOrWorklog, username, password, projectName, userName);
+
+
+			runner.Run();
 			Cursor.Current = Cursors.Default;
 		}
 
 		private void TextBoxUsername_TextChanged(object sender, EventArgs e)
 		{
 			TextBox s = (TextBox)sender;
-			username = s.Text;
+			_username = s.Text;
 		}
 
 		private void TextBoxPassword_TextChanged(object sender, EventArgs e)
 		{
 			TextBox s = (TextBox)sender;
-			password = s.Text;
+			_password = s.Text;
 		}
 
 
 		private void TextBoxProject_TextChanged(object sender, EventArgs e)
 		{
 			TextBox s = (TextBox)sender;
-			projectName = s.Text;
+			_projectName = s.Text;
 		}
 
 		private void TextBoxUser_TextChanged(object sender, EventArgs e)
 		{
 			TextBox s = (TextBox)sender;
-			userName = s.Text;
+			_userName = s.Text;
+		}
+
+		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+		{
+
 		}
 	}
 }

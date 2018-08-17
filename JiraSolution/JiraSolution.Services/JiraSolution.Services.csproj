@@ -41,8 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="QueryResultReader.cs" />
     <Compile Include="Requester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runner.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JiraSolution.Domain\JiraSolution.Domain.csproj">
+      <Project>{c2f5e851-d006-4715-93c0-b6606397901a}</Project>
+      <Name>JiraSolution.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
