@@ -10,9 +10,9 @@ namespace JiraSolution.Domain
 	{
 		private readonly BindingSource _bindingSource = new BindingSource();
 		
-		public void PopulateDataGrid(DataGridView dataGridIssuesOrWorklog, string restQueryResult, List<User> users)
+		public void PopulateDataGrid(DataGridView dataGridIssuesOrWorklog, List<User> users)
 		{
-			if (!string.IsNullOrEmpty(restQueryResult))
+			if (users != null)
 			{
 
 				foreach (User user in users)
@@ -22,7 +22,7 @@ namespace JiraSolution.Domain
 
 				// dataGridIssuesOrWorklog.Columns.Clear();
 				// dataGridIssuesOrWorklog.AutoGenerateColumns = false;
-				dataGridIssuesOrWorklog.AutoSize = true;
+				// dataGridIssuesOrWorklog.AutoSize = true;
 				dataGridIssuesOrWorklog.DataSource = _bindingSource;
 				dataGridIssuesOrWorklog.Columns.Remove("Worklog");
 			}

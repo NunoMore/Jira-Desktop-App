@@ -31,21 +31,27 @@ namespace JiraSolution.DesktopApp
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.ButtonUsers = new System.Windows.Forms.Button();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JiraWorklogApp));
+			this.Button = new System.Windows.Forms.Button();
 			this.TextBoxUsername = new System.Windows.Forms.TextBox();
 			this.TextBoxPassword = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.TextBoxProject = new System.Windows.Forms.TextBox();
 			this.programBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
 			this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.dataGridIssuesOrWorklog = new System.Windows.Forms.DataGridView();
-			this.TextUser = new System.Windows.Forms.TextBox();
 			this.TextBoxUser = new System.Windows.Forms.TextBox();
 			this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.programBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+			this.progressBar1 = new System.Windows.Forms.ProgressBar();
+			this.label1 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
+			this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridIssuesOrWorklog)).BeginInit();
@@ -53,15 +59,15 @@ namespace JiraSolution.DesktopApp
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource2)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// ButtonUsers
+			// Button
 			// 
-			this.ButtonUsers.Location = new System.Drawing.Point(436, 33);
-			this.ButtonUsers.Name = "ButtonUsers";
-			this.ButtonUsers.Size = new System.Drawing.Size(107, 39);
-			this.ButtonUsers.TabIndex = 0;
-			this.ButtonUsers.Text = "Get Users";
-			this.ButtonUsers.UseVisualStyleBackColor = true;
-			this.ButtonUsers.Click += new System.EventHandler(this.ButtonUsers_Click);
+			this.Button.Location = new System.Drawing.Point(414, 24);
+			this.Button.Name = "Button";
+			this.Button.Size = new System.Drawing.Size(129, 145);
+			this.Button.TabIndex = 0;
+			this.Button.Text = "Get Data";
+			this.Button.UseVisualStyleBackColor = true;
+			this.Button.Click += new System.EventHandler(this.Button_Click);
 			// 
 			// TextBoxUsername
 			// 
@@ -80,36 +86,6 @@ namespace JiraSolution.DesktopApp
 			this.TextBoxPassword.TabIndex = 2;
 			this.TextBoxPassword.TextChanged += new System.EventHandler(this.TextBoxPassword_TextChanged);
 			// 
-			// textBox2
-			// 
-			this.textBox2.BackColor = System.Drawing.SystemColors.Control;
-			this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.textBox2.Location = new System.Drawing.Point(30, 25);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(140, 13);
-			this.textBox2.TabIndex = 4;
-			this.textBox2.Text = "Atlassian Username:";
-			// 
-			// textBox1
-			// 
-			this.textBox1.BackColor = System.Drawing.SystemColors.Control;
-			this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.textBox1.Location = new System.Drawing.Point(224, 24);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(140, 13);
-			this.textBox1.TabIndex = 5;
-			this.textBox1.Text = "Atlassian Password:";
-			// 
-			// textBox3
-			// 
-			this.textBox3.BackColor = System.Drawing.SystemColors.Control;
-			this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.textBox3.Location = new System.Drawing.Point(30, 80);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(140, 13);
-			this.textBox3.TabIndex = 7;
-			this.textBox3.Text = "Project:";
-			// 
 			// TextBoxProject
 			// 
 			this.TextBoxProject.Location = new System.Drawing.Point(30, 99);
@@ -126,16 +102,6 @@ namespace JiraSolution.DesktopApp
 			this.dataGridIssuesOrWorklog.Size = new System.Drawing.Size(513, 180);
 			this.dataGridIssuesOrWorklog.TabIndex = 11;
 			// 
-			// TextUser
-			// 
-			this.TextUser.BackColor = System.Drawing.SystemColors.Control;
-			this.TextUser.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.TextUser.Location = new System.Drawing.Point(224, 80);
-			this.TextUser.Name = "TextUser";
-			this.TextUser.Size = new System.Drawing.Size(140, 13);
-			this.TextUser.TabIndex = 13;
-			this.TextUser.Text = "User: (optional)";
-			// 
 			// TextBoxUser
 			// 
 			this.TextBoxUser.Location = new System.Drawing.Point(224, 99);
@@ -147,22 +113,107 @@ namespace JiraSolution.DesktopApp
 			// backgroundWorker1
 			// 
 			this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+			this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+			this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+			// 
+			// progressBar1
+			// 
+			this.progressBar1.Location = new System.Drawing.Point(30, 392);
+			this.progressBar1.Name = "progressBar1";
+			this.progressBar1.Size = new System.Drawing.Size(513, 23);
+			this.progressBar1.TabIndex = 14;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(27, 24);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(103, 13);
+			this.label1.TabIndex = 15;
+			this.label1.Text = "Atlassian Username:";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(221, 24);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(101, 13);
+			this.label2.TabIndex = 16;
+			this.label2.Text = "Atlassian Password:";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(27, 83);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(43, 13);
+			this.label3.TabIndex = 17;
+			this.label3.Text = "Project:";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(221, 83);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(78, 13);
+			this.label4.TabIndex = 18;
+			this.label4.Text = "User (optional):";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(221, 133);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(55, 13);
+			this.label5.TabIndex = 22;
+			this.label5.Text = "End Date:";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(27, 133);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(55, 13);
+			this.label6.TabIndex = 21;
+			this.label6.Text = "Start Date";
+			// 
+			// StartDatePicker
+			// 
+			this.StartDatePicker.Location = new System.Drawing.Point(30, 149);
+			this.StartDatePicker.Name = "StartDatePicker";
+			this.StartDatePicker.Size = new System.Drawing.Size(156, 20);
+			this.StartDatePicker.TabIndex = 23;
+			this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
+			// 
+			// EndDatePicker
+			// 
+			this.EndDatePicker.Location = new System.Drawing.Point(224, 149);
+			this.EndDatePicker.Name = "EndDatePicker";
+			this.EndDatePicker.Size = new System.Drawing.Size(156, 20);
+			this.EndDatePicker.TabIndex = 24;
+			this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
 			// 
 			// JiraWorklogApp
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(586, 450);
-			this.Controls.Add(this.TextUser);
+			this.Controls.Add(this.EndDatePicker);
+			this.Controls.Add(this.StartDatePicker);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.label6);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.label3);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.label1);
+			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.TextBoxUser);
 			this.Controls.Add(this.dataGridIssuesOrWorklog);
-			this.Controls.Add(this.textBox3);
 			this.Controls.Add(this.TextBoxProject);
-			this.Controls.Add(this.textBox1);
-			this.Controls.Add(this.textBox2);
 			this.Controls.Add(this.TextBoxPassword);
 			this.Controls.Add(this.TextBoxUsername);
-			this.Controls.Add(this.ButtonUsers);
+			this.Controls.Add(this.Button);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "JiraWorklogApp";
 			this.Text = "Jira Worklog App";
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).EndInit();
@@ -177,21 +228,26 @@ namespace JiraSolution.DesktopApp
 
 		#endregion
 
-		private System.Windows.Forms.Button ButtonUsers;
+		private System.Windows.Forms.Button Button;
 		private System.Windows.Forms.TextBox TextBoxUsername;
 		private System.Windows.Forms.TextBox TextBoxPassword;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.TextBox textBox3;
 		private System.Windows.Forms.TextBox TextBoxProject;
 		private System.Windows.Forms.BindingSource programBindingSource;
 		private System.Windows.Forms.BindingSource programBindingSource1;
 		private System.Windows.Forms.BindingSource projectBindingSource;
 		private BindingSource programBindingSource2;
 		private DataGridView dataGridIssuesOrWorklog;
-		private TextBox TextUser;
 		private TextBox TextBoxUser;
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
+		private ProgressBar progressBar1;
+		private Label label1;
+		private Label label2;
+		private Label label3;
+		private Label label4;
+		private Label label5;
+		private Label label6;
+		private DateTimePicker StartDatePicker;
+		private DateTimePicker EndDatePicker;
 	}
 }
 

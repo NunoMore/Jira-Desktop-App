@@ -10,7 +10,7 @@ namespace JiraSolution.Domain.Objects
 		public Dictionary<string, List<int>> Worklog { get; set; }
 		//public string Link { get; set; }
 
-		private int TotalWorklog { get; set; }
+		public int TotalWorklog { get; set; } // Must be public for DataGridView
 
 		public void UpdateTotalWorklog()
 		{

@@ -20,12 +20,12 @@ namespace JiraSolution.Services
 
 		public string GetFirstIssues(string uri, string projectName)
 		{
-			return Get(uri + "search?jql=project=" + projectName, _username, _password);
+			return Get(uri + "search?jql=project=" + projectName + " AND updated >= '2018-08-01' AND updated <= '2018-08-20'", _username, _password);
 		}
 
 		public string GetMoreIssues(string uri, string projectName, int startAt)
 		{
-			return Get(uri + "search?jql=project=" + projectName + "&startAt=" + startAt, _username, _password);
+			return Get(uri + "search?jql=project=" + projectName + "&startAt=" + startAt + " AND updated >= '2018-08-01' AND updated <= '2018-08-20'", _username, _password);
 		}
 
 		public string GetWorklogs(string uri, string issueName)
@@ -44,10 +44,11 @@ namespace JiraSolution.Services
 				request.Headers.Add("Authorization", "Basic " + encoded);
 
 				HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-				StreamReader reader = new StreamReader(response.GetResponseStream());
-				string result = reader.ReadToEnd();
-
-				return result;
+				using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+				{
+					string result = reader.ReadToEnd();
+					return result;
+				} 
 			}
 			catch (Exception e)
 			{
