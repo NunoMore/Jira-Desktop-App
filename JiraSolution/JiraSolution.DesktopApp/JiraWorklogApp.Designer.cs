@@ -52,16 +52,18 @@ namespace JiraSolution.DesktopApp
 			this.label6 = new System.Windows.Forms.Label();
 			this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
 			this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
+			this.panel1 = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridIssuesOrWorklog)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource2)).BeginInit();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// Button
 			// 
-			this.Button.Location = new System.Drawing.Point(414, 24);
+			this.Button.Location = new System.Drawing.Point(381, 7);
 			this.Button.Name = "Button";
 			this.Button.Size = new System.Drawing.Size(129, 145);
 			this.Button.TabIndex = 0;
@@ -71,7 +73,7 @@ namespace JiraSolution.DesktopApp
 			// 
 			// TextBoxUsername
 			// 
-			this.TextBoxUsername.Location = new System.Drawing.Point(30, 44);
+			this.TextBoxUsername.Location = new System.Drawing.Point(6, 27);
 			this.TextBoxUsername.Name = "TextBoxUsername";
 			this.TextBoxUsername.Size = new System.Drawing.Size(140, 20);
 			this.TextBoxUsername.TabIndex = 1;
@@ -79,7 +81,7 @@ namespace JiraSolution.DesktopApp
 			// 
 			// TextBoxPassword
 			// 
-			this.TextBoxPassword.Location = new System.Drawing.Point(224, 43);
+			this.TextBoxPassword.Location = new System.Drawing.Point(191, 26);
 			this.TextBoxPassword.Name = "TextBoxPassword";
 			this.TextBoxPassword.PasswordChar = '*';
 			this.TextBoxPassword.Size = new System.Drawing.Size(140, 20);
@@ -88,7 +90,7 @@ namespace JiraSolution.DesktopApp
 			// 
 			// TextBoxProject
 			// 
-			this.TextBoxProject.Location = new System.Drawing.Point(30, 99);
+			this.TextBoxProject.Location = new System.Drawing.Point(6, 82);
 			this.TextBoxProject.Name = "TextBoxProject";
 			this.TextBoxProject.Size = new System.Drawing.Size(140, 20);
 			this.TextBoxProject.TabIndex = 6;
@@ -104,7 +106,7 @@ namespace JiraSolution.DesktopApp
 			// 
 			// TextBoxUser
 			// 
-			this.TextBoxUser.Location = new System.Drawing.Point(224, 99);
+			this.TextBoxUser.Location = new System.Drawing.Point(191, 82);
 			this.TextBoxUser.Name = "TextBoxUser";
 			this.TextBoxUser.Size = new System.Drawing.Size(140, 20);
 			this.TextBoxUser.TabIndex = 12;
@@ -126,7 +128,7 @@ namespace JiraSolution.DesktopApp
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(27, 24);
+			this.label1.Location = new System.Drawing.Point(3, 7);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(103, 13);
 			this.label1.TabIndex = 15;
@@ -135,7 +137,7 @@ namespace JiraSolution.DesktopApp
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(221, 24);
+			this.label2.Location = new System.Drawing.Point(188, 7);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(101, 13);
 			this.label2.TabIndex = 16;
@@ -144,7 +146,7 @@ namespace JiraSolution.DesktopApp
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(27, 83);
+			this.label3.Location = new System.Drawing.Point(3, 66);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(43, 13);
 			this.label3.TabIndex = 17;
@@ -153,7 +155,7 @@ namespace JiraSolution.DesktopApp
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(221, 83);
+			this.label4.Location = new System.Drawing.Point(188, 66);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(78, 13);
 			this.label4.TabIndex = 18;
@@ -162,7 +164,7 @@ namespace JiraSolution.DesktopApp
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(221, 133);
+			this.label5.Location = new System.Drawing.Point(188, 116);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(55, 13);
 			this.label5.TabIndex = 22;
@@ -171,7 +173,7 @@ namespace JiraSolution.DesktopApp
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(27, 133);
+			this.label6.Location = new System.Drawing.Point(3, 116);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(55, 13);
 			this.label6.TabIndex = 21;
@@ -179,40 +181,52 @@ namespace JiraSolution.DesktopApp
 			// 
 			// StartDatePicker
 			// 
-			this.StartDatePicker.Location = new System.Drawing.Point(30, 149);
+			this.StartDatePicker.Location = new System.Drawing.Point(6, 132);
 			this.StartDatePicker.Name = "StartDatePicker";
 			this.StartDatePicker.Size = new System.Drawing.Size(156, 20);
 			this.StartDatePicker.TabIndex = 23;
+			this.StartDatePicker.Value = new System.DateTime(2018, 1, 1, 0, 0, 0, 0);
 			this.StartDatePicker.ValueChanged += new System.EventHandler(this.StartDatePicker_ValueChanged);
 			// 
 			// EndDatePicker
 			// 
-			this.EndDatePicker.Location = new System.Drawing.Point(224, 149);
+			this.EndDatePicker.Location = new System.Drawing.Point(191, 132);
 			this.EndDatePicker.Name = "EndDatePicker";
 			this.EndDatePicker.Size = new System.Drawing.Size(156, 20);
 			this.EndDatePicker.TabIndex = 24;
+			this.EndDatePicker.Value = new System.DateTime(2018, 7, 31, 0, 0, 0, 0);
 			this.EndDatePicker.ValueChanged += new System.EventHandler(this.EndDatePicker_ValueChanged);
+			// 
+			// panel1
+			// 
+			this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.panel1.Controls.Add(this.label3);
+			this.panel1.Controls.Add(this.EndDatePicker);
+			this.panel1.Controls.Add(this.TextBoxUsername);
+			this.panel1.Controls.Add(this.label5);
+			this.panel1.Controls.Add(this.StartDatePicker);
+			this.panel1.Controls.Add(this.label4);
+			this.panel1.Controls.Add(this.TextBoxProject);
+			this.panel1.Controls.Add(this.label2);
+			this.panel1.Controls.Add(this.label1);
+			this.panel1.Controls.Add(this.TextBoxUser);
+			this.panel1.Controls.Add(this.label6);
+			this.panel1.Controls.Add(this.Button);
+			this.panel1.Controls.Add(this.TextBoxPassword);
+			this.panel1.Location = new System.Drawing.Point(30, 15);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(513, 166);
+			this.panel1.TabIndex = 25;
 			// 
 			// JiraWorklogApp
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(586, 450);
-			this.Controls.Add(this.EndDatePicker);
-			this.Controls.Add(this.StartDatePicker);
-			this.Controls.Add(this.label5);
-			this.Controls.Add(this.label6);
-			this.Controls.Add(this.label4);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.label1);
+			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.ClientSize = new System.Drawing.Size(569, 429);
+			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.progressBar1);
-			this.Controls.Add(this.TextBoxUser);
 			this.Controls.Add(this.dataGridIssuesOrWorklog);
-			this.Controls.Add(this.TextBoxProject);
-			this.Controls.Add(this.TextBoxPassword);
-			this.Controls.Add(this.TextBoxUsername);
-			this.Controls.Add(this.Button);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "JiraWorklogApp";
 			this.Text = "Jira Worklog App";
@@ -221,8 +235,9 @@ namespace JiraSolution.DesktopApp
 			((System.ComponentModel.ISupportInitialize)(this.dataGridIssuesOrWorklog)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource2)).EndInit();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -248,6 +263,7 @@ namespace JiraSolution.DesktopApp
 		private Label label6;
 		private DateTimePicker StartDatePicker;
 		private DateTimePicker EndDatePicker;
+		private Panel panel1;
 	}
 }
 

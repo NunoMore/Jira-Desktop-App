@@ -11,21 +11,24 @@ namespace JiraSolution.Services
 	{
 		private readonly string _username;
 		private readonly string _password;
+		private readonly string _projectName;
+		private readonly string _userName;
+		private readonly DateTime _startDate;
+		private readonly DateTime _endDate;
 
-		public Requester(string username, string password)
+		public Requester(string username, string password, string projectName, string userName, DateTime startDate, DateTime endDate)
 		{
 			_username = username;
 			_password = password;
+			_projectName = projectName;
+			_userName = userName;
+			_startDate = startDate;
+			_endDate = endDate;
 		}
 
-		public string GetFirstIssues(string uri, string projectName)
+		public string GetIssues(string uri, int startAt)
 		{
-			return Get(uri + "search?jql=project=" + projectName + " AND updated >= '2018-08-01' AND updated <= '2018-08-20'", _username, _password);
-		}
-
-		public string GetMoreIssues(string uri, string projectName, int startAt)
-		{
-			return Get(uri + "search?jql=project=" + projectName + "&startAt=" + startAt + " AND updated >= '2018-08-01' AND updated <= '2018-08-20'", _username, _password);
+			return Get(uri + "search?jql=project=" + _projectName + "& startAt=" + startAt + " & updated >= '" + _startDate.ToString("yyyy-MM-dd") + "' & updated <= '" + _endDate.ToString("yyyy-MM-dd") + "'", _username, _password);
 		}
 
 		public string GetWorklogs(string uri, string issueName)
@@ -33,7 +36,7 @@ namespace JiraSolution.Services
 			return Get(uri + "issue/" + issueName + "?fields=worklog", _username, _password);
 		}
 
-		private static string Get(string uri, string username, string password)
+		private string Get(string uri, string username, string password)
 		{
 			try
 			{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Net;
-using System.Security.Policy;
 using System.Windows.Forms;
 using JiraSolution.Domain.Objects;
 
@@ -9,6 +9,48 @@ namespace JiraSolution.Services
 {
 	public class QueryResultReader
 	{
+		public List<User> ReadUsers(string restQueryResult, List<User> users, Requester requester, int j, string url, BackgroundWorker backgroundWorker)
+		{
+			string issues = restQueryResult.Substring(restQueryResult.IndexOf("expand") + 7);
+
+			int maxResults = Convert.ToInt32(FindValuesInRestQueryResult("maxResults", restQueryResult));
+
+			if (maxResults > Convert.ToInt32(FindValuesInRestQueryResult("total", restQueryResult)))
+			{
+				maxResults = Convert.ToInt32(FindValuesInRestQueryResult("total", restQueryResult));
+			}
+
+			backgroundWorker.WorkerReportsProgress = true;
+			int progress = 0;
+
+			for (int i = 0; i < maxResults; i++)
+			{
+				progress += i+1;
+				try
+				{
+					issues = issues.Substring(issues.IndexOf("expand") + 7);
+				}
+				catch (Exception e)
+				{
+					break;
+				}
+
+				if (FindValuesInRestQueryResult("timespent", issues) != "null")
+				{
+					string issueName = FindValuesInRestQueryResult("key", issues);
+
+					string worklogs = requester.GetWorklogs(url, issueName);
+
+					users = ReadWorklogs(worklogs, users, issueName);
+
+				}
+
+				backgroundWorker.ReportProgress(progress);
+			}
+
+			return users;
+		}
+
 		public List<User> ReadWorklogs(string worklogs, List<User> users, string issueName)
 		{
 			int totalWorklogs = Convert.ToInt32(FindValuesInRestQueryResult("total", worklogs));
@@ -23,13 +65,6 @@ namespace JiraSolution.Services
 				{
 					continue;
 				}
-
-				//Worklog newWorklog = new Worklog();
-
-				//newWorklog.Id = FindValuesInRestQueryResult('"' + "id" + '"' + ": ", worklogs);
-				//newWorklog.IssueName = issueName;
-				//newWorklog.Description = FindValuesInRestQueryResult('"' + "comment" + '"' + ": ", worklogs);
-				//newWorklog.LogTime = Convert.ToDouble(FindValuesInRestQueryResult('"' + "timeSpentSeconds" + '"' + ": ", worklogs));
 
 				// Se não existe user cria-se um novo
 				if (users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs)) == null)
