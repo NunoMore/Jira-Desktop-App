@@ -16,12 +16,21 @@ namespace JiraSolution.DesktopApp
 		}
 
 		private List<User> _users = new List<User>();
-		private const string Url = "https://glinttdev.atlassian.net/rest/api/latest/";
+		private string _url = "https://glinttdev.atlassian.net/rest/api/latest/";
 
 		private void Button_Click(object sender, EventArgs e)
 		{
-			_users.Clear();
-
+			try
+			{
+				_users.Clear();
+				// dataGridIssuesOrWorklog.DataSource = null;
+				// dataGridIssuesOrWorklog.Refresh();
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
+			
 			progressBar1.Maximum = 100 * 100;
 			progressBar1.Step = 1;
 			progressBar1.Value = 0;
@@ -34,7 +43,16 @@ namespace JiraSolution.DesktopApp
 			{
 				MessageBox.Show( "Must wait before current call ends...", "WARNING");
 			}
+		}
 
+		private void ButtonCancel_Click(object sender, EventArgs e)
+		{
+			backgroundWorker1.CancelAsync();
+		}
+
+		private void TextBoxURL_TextChanged(object sender, EventArgs e)
+		{
+			if (sender is TextBox s) _url = "https://" + s.Text + "/rest/api/latest/";
 		}
 
 		private void TextBoxUsername_TextChanged(object sender, EventArgs e)
@@ -74,8 +92,8 @@ namespace JiraSolution.DesktopApp
 			backgroundWorker1.WorkerSupportsCancellation = true;
 			backgroundWorker1.ReportProgress(0);
 
-			var restQueryResult = Requester.GetIssues(Url, 0);
-
+			var restQueryResult = Requester.GetIssues(_url, 0);
+			
 			if (!string.IsNullOrEmpty(restQueryResult))
 			{
 				var maxIssues = Convert.ToInt32(QueryResultReader.FindValuesInRestQueryResult("total", restQueryResult));
@@ -88,19 +106,19 @@ namespace JiraSolution.DesktopApp
 
 				for (var i = 0; i < maxPages; i++)
 				{
-					if (QueryResultReader.ReadUsers(restQueryResult, _users, Url, backgroundWorker1) == null)
+					_users = QueryResultReader.ReadUsers(restQueryResult, _users, _url, backgroundWorker1);
+
+					if (_users == null)
 					{
 						e.Cancel = true;
 						return;
 					}
 
-					_users = QueryResultReader.ReadUsers(restQueryResult, _users, Url, backgroundWorker1);
-
 					if (startAt + maxResults < maxIssues)
 					{
 						startAt += maxResults;
-						restQueryResult = Requester.GetIssues(Url, startAt);
-						_users = QueryResultReader.ReadUsers(restQueryResult, _users, Url, backgroundWorker1);
+						restQueryResult = Requester.GetIssues(_url, startAt);
+						// _users = QueryResultReader.ReadUsers(restQueryResult, _users, _url, backgroundWorker1);
 					}
 				}
 
@@ -132,11 +150,6 @@ namespace JiraSolution.DesktopApp
 					progressBar1.Value = progressBar1.Maximum;
 				}
 			Cursor.Current = Cursors.Default;
-		}
-
-		private void ButtonCancel_Click(object sender, EventArgs e)
-		{
-			backgroundWorker1.CancelAsync();
 		}
 	}
 }

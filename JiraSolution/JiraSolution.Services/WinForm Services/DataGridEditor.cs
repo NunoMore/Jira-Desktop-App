@@ -6,19 +6,19 @@ namespace JiraSolution.Services.WinForm_Services
 {
 	public static class DataGridEditor
 	{
-		private static readonly BindingSource BindingSource = new BindingSource();
 		
 		public static void PopulateDataGrid<T>(DataGridView dataGridIssuesOrWorklog, List<T> objs)
 		{
+			BindingSource bindingSource = new BindingSource();
+
 			if (objs != null)
 			{
 				foreach (object obj in objs)
 				{
-					BindingSource.Add(obj);
+					bindingSource.Add(obj);
 				}
 
-				// dataGridIssuesOrWorklog.Columns.Clear();
-				dataGridIssuesOrWorklog.DataSource = BindingSource;
+				dataGridIssuesOrWorklog.DataSource = bindingSource;
 
 				dataGridIssuesOrWorklog.AllowUserToResizeColumns = false;
 				dataGridIssuesOrWorklog.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -27,7 +27,6 @@ namespace JiraSolution.Services.WinForm_Services
 				dataGridIssuesOrWorklog.RowHeadersVisible = false;
 				dataGridIssuesOrWorklog.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
 				dataGridIssuesOrWorklog.BackgroundColor = dataGridIssuesOrWorklog.DefaultCellStyle.BackColor;
-
 			}
 		}
 

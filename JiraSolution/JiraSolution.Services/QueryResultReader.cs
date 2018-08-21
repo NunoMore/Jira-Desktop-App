@@ -15,6 +15,8 @@ namespace JiraSolution.Services
 		public static List<User> ReadUsers(string restQueryResult, List<User> users, string url,
 			BackgroundWorker backgroundWorker)
 		{
+			_progress = 0;
+
 			var issues = restQueryResult.Substring(restQueryResult.IndexOf("expand", StringComparison.Ordinal) + 7);
 
 			var maxResults = Convert.ToInt32(FindValuesInRestQueryResult("maxResults", restQueryResult));
@@ -24,7 +26,6 @@ namespace JiraSolution.Services
 
 			for (var i = 0; i < maxResults; i++)
 			{
-
 				if (backgroundWorker.CancellationPending) return null;
 
 				try

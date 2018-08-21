@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace JiraSolution.Domain.Objects
 {
@@ -7,6 +6,7 @@ namespace JiraSolution.Domain.Objects
 	{
 		public byte[] Photo { get; set; }
 		public string Name { get; set; }
+
 		public Dictionary<string, List<int>> Worklogs { get; set; }
 		//public string Link { get; set; }
 
@@ -14,13 +14,9 @@ namespace JiraSolution.Domain.Objects
 
 		public void UpdateTotalWorklog()
 		{
-			foreach (List<int> worklogs in Worklogs.Values)
-			{
-				foreach (int worklog in worklogs)
-				{
-					TotalWorklog += worklog/3600;
-				}
-			}
+			foreach (var worklogs in Worklogs.Values)
+			foreach (var worklog in worklogs)
+				TotalWorklog += worklog / 3600;
 		}
 	}
 }

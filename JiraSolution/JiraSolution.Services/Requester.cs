@@ -19,7 +19,7 @@ namespace JiraSolution.Services
 		public static string GetIssues(string uri, int startAt)
 		{
 			return Get(uri + "search?jql=project=" + ProjectName + " AND worklogDate  >= '" + StartDate.ToString("yyyy-MM-dd") + "' AND worklogDate <= '" + EndDate.ToString("yyyy-MM-dd") + "'" + "& startAt=" + startAt );
-		}// https://glinttdev.atlassian.net/rest/api/2/search?jql=project=b2bsd AND worklogDate >= '2018-07-01' AND worklogDate <= '2018-07-07' &startAt=0
+		}
 
 		public static string GetWorklogs(string uri, string issueName)
 		{
