@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using JiraSolution.Domain.Objects;
 
 namespace JiraSolution.Services.WinForm_Services
 {
@@ -13,14 +12,22 @@ namespace JiraSolution.Services.WinForm_Services
 		{
 			if (objs != null)
 			{
-				dataGridIssuesOrWorklog.AllowUserToAddRows = false;
-				foreach (Object obj in objs)
+				foreach (object obj in objs)
 				{
 					BindingSource.Add(obj);
 				}
 
 				// dataGridIssuesOrWorklog.Columns.Clear();
 				dataGridIssuesOrWorklog.DataSource = BindingSource;
+
+				dataGridIssuesOrWorklog.AllowUserToResizeColumns = false;
+				dataGridIssuesOrWorklog.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+				dataGridIssuesOrWorklog.AllowUserToAddRows = false;
+				dataGridIssuesOrWorklog.RowHeadersVisible = false;
+				dataGridIssuesOrWorklog.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+				dataGridIssuesOrWorklog.BackgroundColor = dataGridIssuesOrWorklog.DefaultCellStyle.BackColor;
+
 			}
 		}
 
@@ -30,7 +37,7 @@ namespace JiraSolution.Services.WinForm_Services
 			{
 				dataGridIssuesOrWorklog.Columns.Remove(columnName); // A coluna é colocada por default porque existe no objeto User. Não é necessária.
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				// ignored
 			}
