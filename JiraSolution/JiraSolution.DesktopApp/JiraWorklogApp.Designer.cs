@@ -53,6 +53,7 @@ namespace JiraSolution.DesktopApp
 			this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
 			this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.ButtonCancel = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridIssuesOrWorklog)).BeginInit();
@@ -65,7 +66,7 @@ namespace JiraSolution.DesktopApp
 			// 
 			this.Button.Location = new System.Drawing.Point(381, 7);
 			this.Button.Name = "Button";
-			this.Button.Size = new System.Drawing.Size(129, 145);
+			this.Button.Size = new System.Drawing.Size(129, 95);
 			this.Button.TabIndex = 0;
 			this.Button.Text = "Get Data";
 			this.Button.UseVisualStyleBackColor = true;
@@ -200,6 +201,7 @@ namespace JiraSolution.DesktopApp
 			// panel1
 			// 
 			this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.panel1.Controls.Add(this.ButtonCancel);
 			this.panel1.Controls.Add(this.label3);
 			this.panel1.Controls.Add(this.EndDatePicker);
 			this.panel1.Controls.Add(this.TextBoxUsername);
@@ -217,6 +219,16 @@ namespace JiraSolution.DesktopApp
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(513, 166);
 			this.panel1.TabIndex = 25;
+			// 
+			// ButtonCancel
+			// 
+			this.ButtonCancel.Location = new System.Drawing.Point(381, 109);
+			this.ButtonCancel.Name = "ButtonCancel";
+			this.ButtonCancel.Size = new System.Drawing.Size(129, 43);
+			this.ButtonCancel.TabIndex = 25;
+			this.ButtonCancel.Text = "Cancel";
+			this.ButtonCancel.UseVisualStyleBackColor = true;
+			this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
 			// 
 			// JiraWorklogApp
 			// 
@@ -264,6 +276,7 @@ namespace JiraSolution.DesktopApp
 		private DateTimePicker StartDatePicker;
 		private DateTimePicker EndDatePicker;
 		private Panel panel1;
+		private Button ButtonCancel;
 	}
 }
 

@@ -7,61 +7,62 @@ using JiraSolution.Domain.Objects;
 
 namespace JiraSolution.Services
 {
-	public class QueryResultReader
+	public static class QueryResultReader
 	{
-		public List<User> ReadUsers(string restQueryResult, List<User> users, Requester requester, int j, string url, BackgroundWorker backgroundWorker)
-		{
-			string issues = restQueryResult.Substring(restQueryResult.IndexOf("expand") + 7);
+		private static int _progress;
+		public static int ProgressStep;
 
-			int maxResults = Convert.ToInt32(FindValuesInRestQueryResult("maxResults", restQueryResult));
+		public static List<User> ReadUsers(string restQueryResult, List<User> users, string url,
+			BackgroundWorker backgroundWorker)
+		{
+			var issues = restQueryResult.Substring(restQueryResult.IndexOf("expand", StringComparison.Ordinal) + 7);
+
+			var maxResults = Convert.ToInt32(FindValuesInRestQueryResult("maxResults", restQueryResult));
 
 			if (maxResults > Convert.ToInt32(FindValuesInRestQueryResult("total", restQueryResult)))
-			{
 				maxResults = Convert.ToInt32(FindValuesInRestQueryResult("total", restQueryResult));
-			}
 
-			backgroundWorker.WorkerReportsProgress = true;
-			int progress = 0;
-
-			for (int i = 0; i < maxResults; i++)
+			for (var i = 0; i < maxResults; i++)
 			{
-				progress += i+1;
+
+				if (backgroundWorker.CancellationPending) return null;
+
 				try
 				{
-					issues = issues.Substring(issues.IndexOf("expand") + 7);
+					issues = issues.Substring(issues.IndexOf("expand", StringComparison.Ordinal) + 7);
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
 					break;
 				}
 
 				if (FindValuesInRestQueryResult("timespent", issues) != "null")
 				{
-					string issueName = FindValuesInRestQueryResult("key", issues);
+					var issueName = FindValuesInRestQueryResult("key", issues);
 
-					string worklogs = requester.GetWorklogs(url, issueName);
+					var worklogs = Requester.GetWorklogs(url, issueName);
 
 					users = ReadWorklogs(worklogs, users, issueName);
-
 				}
 
-				backgroundWorker.ReportProgress(progress);
+				backgroundWorker.ReportProgress(_progress);
+				_progress += 10000 / ProgressStep;
 			}
 
 			return users;
 		}
 
-		public List<User> ReadWorklogs(string worklogs, List<User> users, string issueName)
+		public static List<User> ReadWorklogs(string worklogs, List<User> users, string issueName)
 		{
-			int totalWorklogs = Convert.ToInt32(FindValuesInRestQueryResult("total", worklogs));
+			var totalWorklogs = Convert.ToInt32(FindValuesInRestQueryResult("total", worklogs));
 
-			for (int t = 0; t < totalWorklogs; t++)
+			for (var t = 0; t < totalWorklogs; t++)
 			{
 				try
 				{
-					worklogs = worklogs.Substring(worklogs.IndexOf("author") + 7);
+					worklogs = worklogs.Substring(worklogs.IndexOf("author", StringComparison.Ordinal) + 7);
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
 					continue;
 				}
@@ -69,54 +70,46 @@ namespace JiraSolution.Services
 				// Se não existe user cria-se um novo
 				if (users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs)) == null)
 				{
-					User newUser = new User();
+					var newUser = new User();
 
 					newUser.Name = FindValuesInRestQueryResult("displayName", worklogs);
 
-					WebClient webClient = new WebClient();
+					var webClient = new WebClient();
 					newUser.Photo = webClient.DownloadData(FindValuesInRestQueryResult("48x48", worklogs));
 
-					newUser.Worklog = new Dictionary<string, List<int>>
+					newUser.Worklogs = new Dictionary<string, List<int>>
 					{
 						{issueName, new List<int>()}
 					};
 
-					newUser.Worklog[issueName].Add(Convert.ToInt32(FindValuesInRestQueryResult("timeSpentSeconds", worklogs)));
+					newUser.Worklogs[issueName].Add(Convert.ToInt32(FindValuesInRestQueryResult("timeSpentSeconds", worklogs)));
 					users.Add(newUser);
 				}
 				else // Se existir é necessário atualizar
 				{
 					// Se o User não contém ainda o issue cria-se um novo
 					if (!users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs))
-						.Worklog.ContainsKey(issueName))
-					{
+						.Worklogs.ContainsKey(issueName))
 						users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs))
-							.Worklog.Add(issueName, new List<int>());
-
-					}
+							.Worklogs.Add(issueName, new List<int>());
 
 					users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs))
-						.Worklog[issueName].Add(Convert.ToInt32(FindValuesInRestQueryResult("timeSpentSeconds", worklogs)));
+						.Worklogs[issueName].Add(Convert.ToInt32(FindValuesInRestQueryResult("timeSpentSeconds", worklogs)));
 				}
 			}
 
 			return users;
 		}
 
-		public string FindValuesInRestQueryResult(string dataToFind, string restQueryResult)
+		public static string FindValuesInRestQueryResult(string dataToFind, string restQueryResult)
 		{
 			try
 			{
-				int startIndex = restQueryResult.IndexOf(dataToFind);
-				string result = restQueryResult.Substring(startIndex + dataToFind.Length + 2, restQueryResult.IndexOf(",", startIndex) - (startIndex + dataToFind.Length + 2));
+				var startIndex = restQueryResult.IndexOf(dataToFind, StringComparison.Ordinal);
+				var result = restQueryResult.Substring(startIndex + dataToFind.Length + 2,
+					restQueryResult.IndexOf(",", startIndex, StringComparison.Ordinal) - (startIndex + dataToFind.Length + 2));
 
-				if (int.TryParse(result, out int n))
-				{
-					return result;
-				}
-
-				return result.Substring(1, result.Length - 2);
-
+				return int.TryParse(result, out _) ? result : result.Substring(1, result.Length - 2);
 			}
 			catch (Exception e)
 			{

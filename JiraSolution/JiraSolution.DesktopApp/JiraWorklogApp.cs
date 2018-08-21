@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using JiraSolution.Domain;
 using JiraSolution.Domain.Objects;
 using JiraSolution.Services;
+using JiraSolution.Services.WinForm_Services;
 
 namespace JiraSolution.DesktopApp
 {
@@ -15,101 +15,92 @@ namespace JiraSolution.DesktopApp
 			InitializeComponent();
 		}
 
-		private string _username;
-		private string _password;
-		private string _projectName;
-		private string _userName;
-		private DateTime _startDate = Convert.ToDateTime("2018-01-01");
-		private DateTime _endDate = Convert.ToDateTime("2018-07-31");
 		private List<User> _users = new List<User>();
-
 		private const string Url = "https://glinttdev.atlassian.net/rest/api/latest/";
-
-		private readonly DataGridEditor _dataGridEditor = new DataGridEditor();
-		private readonly QueryResultReader _queryResultReader = new QueryResultReader();
 
 		private void Button_Click(object sender, EventArgs e)
 		{
-			progressBar1.Maximum = 105;
+			_users.Clear();
+
+			progressBar1.Maximum = 100 * 100;
 			progressBar1.Step = 1;
 			progressBar1.Value = 0;
 
-			backgroundWorker1.RunWorkerAsync();
+			try
+			{
+				backgroundWorker1.RunWorkerAsync();
+			}
+			catch (Exception )
+			{
+				MessageBox.Show( "Must wait before current call ends...", "WARNING");
+			}
+
 		}
 
 		private void TextBoxUsername_TextChanged(object sender, EventArgs e)
 		{
-			TextBox s = sender as TextBox;
-			_username = s.Text;
+			if (sender is TextBox s) Requester.Username = s.Text;
 		}
 
 		private void TextBoxPassword_TextChanged(object sender, EventArgs e)
 		{
-			TextBox s = sender as TextBox;
-			_password = s.Text;
+			if (sender is TextBox s) Requester.Password = s.Text;
 		}
 
 
 		private void TextBoxProject_TextChanged(object sender, EventArgs e)
 		{
-			TextBox s = sender as TextBox;
-			_projectName = s.Text;
+			if (sender is TextBox s) Requester.ProjectName = s.Text;
 		}
 
 		private void TextBoxUser_TextChanged(object sender, EventArgs e)
 		{
-			TextBox s = sender as TextBox;
-			_userName = s.Text;
-		}
-
-		private void EndDatePicker_ValueChanged(object sender, EventArgs e)
-		{
-			DateTimePicker s = sender as DateTimePicker;
-			_endDate = s.Value;
+			if (sender is TextBox s) Requester.UserName = s.Text;
 		}
 
 		private void StartDatePicker_ValueChanged(object sender, EventArgs e)
 		{
-			DateTimePicker s = sender as DateTimePicker;
-			_startDate = s.Value;
+			if (sender is DateTimePicker s) Requester.StartDate = s.Value;
+		}
+
+		private void EndDatePicker_ValueChanged(object sender, EventArgs e)
+		{
+			if (sender is DateTimePicker s) Requester.EndDate = s.Value;
 		}
 
 		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
 		{
-			//BackgroundWorker backgroundWorker = sender as BackgroundWorker;
+			backgroundWorker1.WorkerReportsProgress = true;
+			backgroundWorker1.WorkerSupportsCancellation = true;
+			backgroundWorker1.ReportProgress(0);
 
-			//Cursor.Current = Cursors.WaitCursor;
-			
-			//Runner runner = new Runner(_username, _password, _projectName, _userName, _startDate, _endDate, backgroundWorker);
-			//_users = runner.Run();
-
-			////////
-
-			Requester requester = new Requester(_username, _password,_projectName, _userName, _startDate, _endDate);
-
-			_users.Clear();
-
-			string restQueryResult = requester.GetIssues(Url, 0);
+			var restQueryResult = Requester.GetIssues(Url, 0);
 
 			if (!string.IsNullOrEmpty(restQueryResult))
 			{
-				int maxIssues = Convert.ToInt32(_queryResultReader.FindValuesInRestQueryResult("total", restQueryResult));
-				int maxResults = Convert.ToInt32(_queryResultReader.FindValuesInRestQueryResult("maxResults", restQueryResult));
+				var maxIssues = Convert.ToInt32(QueryResultReader.FindValuesInRestQueryResult("total", restQueryResult));
+				var maxResults = Convert.ToInt32(QueryResultReader.FindValuesInRestQueryResult("maxResults", restQueryResult));
 
-				int progressBarCurrentStep = maxIssues;
+				QueryResultReader.ProgressStep = maxIssues;
 
-				int startAt = 0;
-				int maxPages = (maxIssues + maxResults + 1) / maxResults;
+				var startAt = 0;
+				var maxPages = (maxIssues + maxResults + 1) / maxResults;
 
-				for (int i = 0; i < maxPages; i++)
+				for (var i = 0; i < maxPages; i++)
 				{
-					_users = _queryResultReader.ReadUsers(restQueryResult, _users, requester, progressBarCurrentStep, Url, backgroundWorker1);
+					if (QueryResultReader.ReadUsers(restQueryResult, _users, Url, backgroundWorker1) == null)
+					{
+						e.Cancel = true;
+						return;
+					}
+
+					_users = QueryResultReader.ReadUsers(restQueryResult, _users, Url, backgroundWorker1);
 
 					if (startAt + maxResults < maxIssues)
 					{
 						startAt += maxResults;
-						restQueryResult = requester.GetIssues(Url, startAt);
-						_users = _queryResultReader.ReadUsers(restQueryResult, _users, requester, progressBarCurrentStep, Url, backgroundWorker1);
+						restQueryResult = Requester.GetIssues(Url, startAt);
+						_users = QueryResultReader.ReadUsers(restQueryResult, _users, Url, backgroundWorker1);
 					}
 				}
 
@@ -119,23 +110,33 @@ namespace JiraSolution.DesktopApp
 
 		private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
 		{
-			progressBar1.Value = e.ProgressPercentage;
+			Cursor.Current = Cursors.WaitCursor;
+
+			try
+			{
+				progressBar1.Value = e.ProgressPercentage;
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
 		}
 
 		private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
-
 			if (_users != null)
-			{
-				if(_users.Count != 0)
+				if (_users.Count != 0)
 				{
-					_dataGridEditor.PopulateDataGrid(dataGridIssuesOrWorklog, _users);
-
+					DataGridEditor.PopulateDataGrid(dataGridIssuesOrWorklog, _users);
+					DataGridEditor.RemoveColumn(dataGridIssuesOrWorklog, "Worklogs");
 					progressBar1.Value = progressBar1.Maximum;
 				}
-			}
 			Cursor.Current = Cursors.Default;
+		}
+
+		private void ButtonCancel_Click(object sender, EventArgs e)
+		{
+			backgroundWorker1.CancelAsync();
 		}
 	}
 }
-

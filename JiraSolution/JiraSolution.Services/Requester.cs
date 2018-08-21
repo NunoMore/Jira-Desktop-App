@@ -1,53 +1,43 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Security.Policy;
 using System.Text;
 using System.Windows.Forms;
 
 namespace JiraSolution.Services
 {
-	public class Requester
+	public static class Requester
 	{
-		private readonly string _username;
-		private readonly string _password;
-		private readonly string _projectName;
-		private readonly string _userName;
-		private readonly DateTime _startDate;
-		private readonly DateTime _endDate;
+		public static string Username;
+		public static string Password;
+		public static string ProjectName;
+		public static string UserName;
+		public static DateTime StartDate = Convert.ToDateTime("2018-01-01");
+		public static DateTime EndDate = Convert.ToDateTime("2018-07-31");
 
-		public Requester(string username, string password, string projectName, string userName, DateTime startDate, DateTime endDate)
+
+		public static string GetIssues(string uri, int startAt)
 		{
-			_username = username;
-			_password = password;
-			_projectName = projectName;
-			_userName = userName;
-			_startDate = startDate;
-			_endDate = endDate;
+			return Get(uri + "search?jql=project=" + ProjectName + " AND worklogDate  >= '" + StartDate.ToString("yyyy-MM-dd") + "' AND worklogDate <= '" + EndDate.ToString("yyyy-MM-dd") + "'" + "& startAt=" + startAt );
+		}// https://glinttdev.atlassian.net/rest/api/2/search?jql=project=b2bsd AND worklogDate >= '2018-07-01' AND worklogDate <= '2018-07-07' &startAt=0
+
+		public static string GetWorklogs(string uri, string issueName)
+		{
+			return Get(uri + "issue/" + issueName + "?fields=worklog");
 		}
 
-		public string GetIssues(string uri, int startAt)
-		{
-			return Get(uri + "search?jql=project=" + _projectName + "& startAt=" + startAt + " & updated >= '" + _startDate.ToString("yyyy-MM-dd") + "' & updated <= '" + _endDate.ToString("yyyy-MM-dd") + "'", _username, _password);
-		}
-
-		public string GetWorklogs(string uri, string issueName)
-		{
-			return Get(uri + "issue/" + issueName + "?fields=worklog", _username, _password);
-		}
-
-		private string Get(string uri, string username, string password)
+		private static string Get(string uri)
 		{
 			try
 			{
 				HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
 				request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
-				String encoded = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(username + ":" + password));
+				String encoded = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(Username + ":" + Password));
 				request.Headers.Add("Authorization", "Basic " + encoded);
 
 				HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-				using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+				using (StreamReader reader = new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException()))
 				{
 					string result = reader.ReadToEnd();
 					return result;
