@@ -9,14 +9,12 @@ namespace JiraSolution.Services
 {
 	public static class QueryResultReader
 	{
-		private static int _progress;
+		public static int Progress;
 		public static int ProgressStep;
 
 		public static List<User> ReadUsers(string restQueryResult, List<User> users, string url,
 			BackgroundWorker backgroundWorker)
 		{
-			_progress = 0;
-
 			var issues = restQueryResult.Substring(restQueryResult.IndexOf("expand", StringComparison.Ordinal) + 7);
 
 			var maxResults = Convert.ToInt32(FindValuesInRestQueryResult("maxResults", restQueryResult));
@@ -46,14 +44,14 @@ namespace JiraSolution.Services
 					users = ReadWorklogs(worklogs, users, issueName);
 				}
 
-				backgroundWorker.ReportProgress(_progress);
-				_progress += 10000 / ProgressStep;
+				backgroundWorker.ReportProgress(Progress);
+				Progress += 10000 / ProgressStep;
 			}
 
 			return users;
 		}
 
-		public static List<User> ReadWorklogs(string worklogs, List<User> users, string issueName)
+		private static List<User> ReadWorklogs(string worklogs, List<User> users, string issueName)
 		{
 			var totalWorklogs = Convert.ToInt32(FindValuesInRestQueryResult("total", worklogs));
 
@@ -67,6 +65,11 @@ namespace JiraSolution.Services
 				{
 					continue;
 				}
+
+				//if (Convert.ToDateTime(FindValuesInRestQueryResult("started", worklogs)) < Requester.StartDate.ToString("yyyy-MM-dd"))
+				//{
+					
+				//}
 
 				// Se não existe user cria-se um novo
 				if (users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs)) == null)

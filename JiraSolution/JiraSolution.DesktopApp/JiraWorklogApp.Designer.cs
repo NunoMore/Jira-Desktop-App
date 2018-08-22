@@ -267,7 +267,7 @@ namespace JiraSolution.DesktopApp
 			this.panel2.Controls.Add(this.panel1);
 			this.panel2.Controls.Add(this.dataGridIssuesOrWorklog);
 			this.panel2.Controls.Add(this.progressBar1);
-			this.panel2.Location = new System.Drawing.Point(16, 14);
+			this.panel2.Location = new System.Drawing.Point(17, 12);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(532, 430);
 			this.panel2.TabIndex = 26;

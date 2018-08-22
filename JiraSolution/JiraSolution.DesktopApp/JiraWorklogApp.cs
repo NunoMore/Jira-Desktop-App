@@ -100,6 +100,7 @@ namespace JiraSolution.DesktopApp
 				var maxResults = Convert.ToInt32(QueryResultReader.FindValuesInRestQueryResult("maxResults", restQueryResult));
 
 				QueryResultReader.ProgressStep = maxIssues;
+				QueryResultReader.Progress = 0;
 
 				var startAt = 0;
 				var maxPages = (maxIssues + maxResults + 1) / maxResults;
@@ -107,6 +108,7 @@ namespace JiraSolution.DesktopApp
 				for (var i = 0; i < maxPages; i++)
 				{
 					_users = QueryResultReader.ReadUsers(restQueryResult, _users, _url, backgroundWorker1);
+					_users.ForEach(x => x.UpdateTotalWorklog());
 
 					if (_users == null)
 					{
@@ -121,8 +123,6 @@ namespace JiraSolution.DesktopApp
 						// _users = QueryResultReader.ReadUsers(restQueryResult, _users, _url, backgroundWorker1);
 					}
 				}
-
-				_users.ForEach(x => x.UpdateTotalWorklog());
 			}
 		}
 
