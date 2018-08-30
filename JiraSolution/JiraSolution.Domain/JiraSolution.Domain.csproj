@@ -42,15 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Objects\User.cs" />
-    <Compile Include="DataGridEditor.cs" />
-    <Compile Include="Objects\Worklog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\JiraSolution.Services2\JiraSolution.Services.csproj">
-      <Project>{B215050F-45C5-4530-87E7-1D1B781B14ED}</Project>
-      <Name>JiraSolution.Services</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
