@@ -16,7 +16,10 @@ namespace JiraSolution.Domain.Objects
 		{
 			foreach (var worklogs in Worklogs.Values)
 			foreach (var worklog in worklogs)
-				TotalWorklog += worklog / 3600;
+				TotalWorklog += worklog;
+
+
+			TotalWorklog = TotalWorklog /3600;
 		}
 	}
 }

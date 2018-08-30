@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Net;
 using System.Windows.Forms;
 using JiraSolution.Domain.Objects;
@@ -51,7 +52,7 @@ namespace JiraSolution.Services
 			return users;
 		}
 
-		private static List<User> ReadWorklogs(string worklogs, List<User> users, string issueName)
+		public static List<User> ReadWorklogs(string worklogs, List<User> users, string issueName)
 		{
 			var totalWorklogs = Convert.ToInt32(FindValuesInRestQueryResult("total", worklogs));
 
@@ -66,10 +67,17 @@ namespace JiraSolution.Services
 					continue;
 				}
 
-				//if (Convert.ToDateTime(FindValuesInRestQueryResult("started", worklogs)) < Requester.StartDate.ToString("yyyy-MM-dd"))
-				//{
-					
-				//}
+				//var d = Convert.ToDateTime(FindValuesInRestQueryResult("started", worklogs));
+				//var d2 = Convert.ToDateTime(Requester.EndDate.ToString("yyyy-MM-dd") + " 23:59:59");
+
+				//var s = d < Convert.ToDateTime(Requester.StartDate.ToString());
+				//var s2 = Convert.ToDateTime(FindValuesInRestQueryResult("started", worklogs)) > d2 ;
+
+				if (Convert.ToDateTime(FindValuesInRestQueryResult("started", worklogs)) < Convert.ToDateTime(Requester.StartDate.ToString()) ||
+				       Convert.ToDateTime(FindValuesInRestQueryResult("started", worklogs)) > Convert.ToDateTime(Requester.EndDate.ToString("yyyy-MM-dd") + " 23:59:59"))
+				{
+					continue;
+				}
 
 				// Se não existe user cria-se um novo
 				if (users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs)) == null)
@@ -104,6 +112,15 @@ namespace JiraSolution.Services
 
 			return users;
 		}
+
+		//public static List<string> ReadProjects(string projects)
+		//{
+		//	List<string> list = new List<string>();
+
+		//	string project = FindValuesInRestQueryResult("key", projects);
+		//	projects.Substring(project.IndexOf("expand", StringComparison.Ordinal) + 7);
+
+		//}
 
 		public static string FindValuesInRestQueryResult(string dataToFind, string restQueryResult)
 		{

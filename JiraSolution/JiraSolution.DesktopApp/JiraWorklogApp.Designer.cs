@@ -53,9 +53,9 @@ namespace JiraSolution.DesktopApp
 			this.StartDatePicker = new System.Windows.Forms.DateTimePicker();
 			this.EndDatePicker = new System.Windows.Forms.DateTimePicker();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.ButtonCancel = new System.Windows.Forms.Button();
-			this.label7 = new System.Windows.Forms.Label();
 			this.TextBoxURL = new System.Windows.Forms.TextBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.ButtonCancel = new System.Windows.Forms.Button();
 			this.panel2 = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.programBindingSource1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
@@ -157,18 +157,18 @@ namespace JiraSolution.DesktopApp
 			this.label3.AutoSize = true;
 			this.label3.Location = new System.Drawing.Point(3, 94);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(43, 13);
+			this.label3.Size = new System.Drawing.Size(89, 13);
 			this.label3.TabIndex = 17;
-			this.label3.Text = "Project:";
+			this.label3.Text = "Project (optional):";
 			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Location = new System.Drawing.Point(188, 94);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(78, 13);
+			this.label4.Size = new System.Drawing.Size(118, 13);
 			this.label4.TabIndex = 18;
-			this.label4.Text = "User (optional):";
+			this.label4.Text = "User (not implemented):";
 			// 
 			// label5
 			// 
@@ -231,16 +231,14 @@ namespace JiraSolution.DesktopApp
 			this.panel1.Size = new System.Drawing.Size(513, 190);
 			this.panel1.TabIndex = 25;
 			// 
-			// ButtonCancel
+			// TextBoxURL
 			// 
-			this.ButtonCancel.BackColor = System.Drawing.Color.Red;
-			this.ButtonCancel.Location = new System.Drawing.Point(381, 137);
-			this.ButtonCancel.Name = "ButtonCancel";
-			this.ButtonCancel.Size = new System.Drawing.Size(129, 43);
-			this.ButtonCancel.TabIndex = 25;
-			this.ButtonCancel.Text = "Cancel";
-			this.ButtonCancel.UseVisualStyleBackColor = false;
-			this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
+			this.TextBoxURL.Location = new System.Drawing.Point(106, 7);
+			this.TextBoxURL.Name = "TextBoxURL";
+			this.TextBoxURL.Size = new System.Drawing.Size(225, 20);
+			this.TextBoxURL.TabIndex = 27;
+			this.TextBoxURL.Text = "glinttdev.atlassian.net";
+			this.TextBoxURL.TextChanged += new System.EventHandler(this.TextBoxURL_TextChanged);
 			// 
 			// label7
 			// 
@@ -252,14 +250,16 @@ namespace JiraSolution.DesktopApp
 			this.label7.TabIndex = 26;
 			this.label7.Text = "ATLASSIAN URL: ";
 			// 
-			// TextBoxURL
+			// ButtonCancel
 			// 
-			this.TextBoxURL.Location = new System.Drawing.Point(106, 7);
-			this.TextBoxURL.Name = "TextBoxURL";
-			this.TextBoxURL.Size = new System.Drawing.Size(225, 20);
-			this.TextBoxURL.TabIndex = 27;
-			this.TextBoxURL.Text = "glinttdev.atlassian.net";
-			this.TextBoxURL.TextChanged += new System.EventHandler(this.TextBoxURL_TextChanged);
+			this.ButtonCancel.BackColor = System.Drawing.Color.Red;
+			this.ButtonCancel.Location = new System.Drawing.Point(381, 137);
+			this.ButtonCancel.Name = "ButtonCancel";
+			this.ButtonCancel.Size = new System.Drawing.Size(129, 43);
+			this.ButtonCancel.TabIndex = 25;
+			this.ButtonCancel.Text = "Cancel";
+			this.ButtonCancel.UseVisualStyleBackColor = false;
+			this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
 			// 
 			// panel2
 			// 

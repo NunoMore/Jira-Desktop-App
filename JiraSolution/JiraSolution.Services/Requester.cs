@@ -26,6 +26,11 @@ namespace JiraSolution.Services
 			return Get(uri + "issue/" + issueName + "?fields=worklog");
 		}
 
+		public static string GetProjects(string uri)
+		{
+			return Get(uri + "project");
+		}
+
 		private static string Get(string uri)
 		{
 			try

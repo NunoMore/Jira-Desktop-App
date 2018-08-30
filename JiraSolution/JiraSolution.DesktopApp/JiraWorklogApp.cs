@@ -15,22 +15,13 @@ namespace JiraSolution.DesktopApp
 			InitializeComponent();
 		}
 
-		private List<User> _users = new List<User>();
+		private List<User> _users;
 		private string _url = "https://glinttdev.atlassian.net/rest/api/latest/";
 
 		private void Button_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				_users.Clear();
-				// dataGridIssuesOrWorklog.DataSource = null;
-				// dataGridIssuesOrWorklog.Refresh();
-			}
-			catch (Exception)
-			{
-				// ignored
-			}
-			
+			_users = new List<User>();
+
 			progressBar1.Maximum = 100 * 100;
 			progressBar1.Step = 1;
 			progressBar1.Value = 0;
@@ -48,6 +39,8 @@ namespace JiraSolution.DesktopApp
 		private void ButtonCancel_Click(object sender, EventArgs e)
 		{
 			backgroundWorker1.CancelAsync();
+
+			MessageBox.Show("Operation canceled...", "INFO");
 		}
 
 		private void TextBoxURL_TextChanged(object sender, EventArgs e)
@@ -108,13 +101,14 @@ namespace JiraSolution.DesktopApp
 				for (var i = 0; i < maxPages; i++)
 				{
 					_users = QueryResultReader.ReadUsers(restQueryResult, _users, _url, backgroundWorker1);
-					_users.ForEach(x => x.UpdateTotalWorklog());
 
 					if (_users == null)
 					{
 						e.Cancel = true;
 						return;
 					}
+
+					_users.ForEach(x => x.UpdateTotalWorklog());
 
 					if (startAt + maxResults < maxIssues)
 					{
@@ -150,6 +144,8 @@ namespace JiraSolution.DesktopApp
 					progressBar1.Value = progressBar1.Maximum;
 				}
 			Cursor.Current = Cursors.Default;
+			
+			MessageBox.Show("Operation conluded with success!", "INFO");
 		}
 	}
 }
