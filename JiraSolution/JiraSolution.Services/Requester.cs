@@ -18,12 +18,12 @@ namespace JiraSolution.Services
 
 		public static string GetIssues(string uri, int startAt)
 		{
-			return Get(uri + "search?jql=project=" + ProjectName + " AND worklogDate  >= '" + StartDate.ToString("yyyy-MM-dd") + "' AND worklogDate <= '" + EndDate.ToString("yyyy-MM-dd") + "'" + "& startAt=" + startAt );
+			return Get(uri + "search?jql=project=" + ProjectName + " AND worklogDate  >= '" + StartDate.ToString("yyyy-MM-dd") + "' AND worklogDate <= '" + EndDate.ToString("yyyy-MM-dd") + "'" + "& startAt=" + startAt + " & maxResults=100");
 		}
 
 		public static string GetWorklogs(string uri, string issueName)
 		{
-			return Get(uri + "issue/" + issueName + "?fields=worklog");
+			return Get(uri + "issue/" + issueName + "/worklog");
 		}
 
 		public static string GetProjects(string uri)
@@ -50,7 +50,10 @@ namespace JiraSolution.Services
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show(e.Message, "ERROR");
+				if (!e.Message.Contains("(404)"))
+				{
+					MessageBox.Show(e.Message, "ERROR");
+				}
 				return null;
 			}
 

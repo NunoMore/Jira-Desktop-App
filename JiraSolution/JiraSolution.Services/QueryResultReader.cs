@@ -16,7 +16,7 @@ namespace JiraSolution.Services
 		public static List<User> ReadUsers(string restQueryResult, List<User> users, string url,
 			BackgroundWorker backgroundWorker)
 		{
-			var issues = restQueryResult.Substring(restQueryResult.IndexOf("expand", StringComparison.Ordinal) + 7);
+			var issues = restQueryResult; // restQueryResult.Substring(restQueryResult.IndexOf("fields", StringComparison.Ordinal) + 7);
 
 			var maxResults = Convert.ToInt32(FindValuesInRestQueryResult("maxResults", restQueryResult));
 
@@ -27,22 +27,30 @@ namespace JiraSolution.Services
 			{
 				if (backgroundWorker.CancellationPending) return null;
 
-				try
-				{
-					issues = issues.Substring(issues.IndexOf("expand", StringComparison.Ordinal) + 7);
-				}
-				catch (Exception)
-				{
-					break;
-				}
+				var issueName = FindValuesInRestQueryResult("key", issues);
+
 
 				if (FindValuesInRestQueryResult("timespent", issues) != "null")
 				{
-					var issueName = FindValuesInRestQueryResult("key", issues);
+					// var issueName = FindValuesInRestQueryResult("key", issues);
 
 					var worklogs = Requester.GetWorklogs(url, issueName);
 
 					users = ReadWorklogs(worklogs, users, issueName);
+				}
+
+				if (FindValuesInRestQueryResult("subtask", restQueryResult) == "true")
+				{
+					
+				}
+
+				try
+				{
+					issues = issues.Substring(issues.IndexOf("hasVoted", StringComparison.Ordinal) + 7);
+				}
+				catch (Exception)
+				{
+					break;
 				}
 
 				backgroundWorker.ReportProgress(Progress);
@@ -79,12 +87,16 @@ namespace JiraSolution.Services
 					continue;
 				}
 
-				// Se não existe user cria-se um novo
-				if (users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs)) == null)
-				{
-					var newUser = new User();
+				var stringUser = FindValuesInRestQueryResult("displayName", worklogs); 
 
-					newUser.Name = FindValuesInRestQueryResult("displayName", worklogs);
+				// Se não existe user cria-se um novo
+				if (users.Find(user => user.Name == stringUser) == null)
+				{
+					var newUser = new User
+					{
+						Name = stringUser
+					};
+
 
 					var webClient = new WebClient();
 					newUser.Photo = webClient.DownloadData(FindValuesInRestQueryResult("48x48", worklogs));
@@ -100,12 +112,12 @@ namespace JiraSolution.Services
 				else // Se existir é necessário atualizar
 				{
 					// Se o User não contém ainda o issue cria-se um novo
-					if (!users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs))
+					if (!users.Find(user => user.Name == stringUser)
 						.Worklogs.ContainsKey(issueName))
-						users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs))
+						users.Find(user => user.Name == stringUser)
 							.Worklogs.Add(issueName, new List<int>());
 
-					users.Find(user => user.Name == FindValuesInRestQueryResult("displayName", worklogs))
+					users.Find(user => user.Name == stringUser)
 						.Worklogs[issueName].Add(Convert.ToInt32(FindValuesInRestQueryResult("timeSpentSeconds", worklogs)));
 				}
 			}
@@ -134,7 +146,7 @@ namespace JiraSolution.Services
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show(e.Message, "ERROR");
+				// MessageBox.Show(e.Message, "ERROR");
 				return null;
 			}
 		}

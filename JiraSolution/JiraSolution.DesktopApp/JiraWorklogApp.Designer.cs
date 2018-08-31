@@ -107,13 +107,14 @@ namespace JiraSolution.DesktopApp
 			// 
 			this.dataGridIssuesOrWorklog.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.dataGridIssuesOrWorklog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridIssuesOrWorklog.Location = new System.Drawing.Point(14, 209);
+			this.dataGridIssuesOrWorklog.Location = new System.Drawing.Point(13, 217);
 			this.dataGridIssuesOrWorklog.Name = "dataGridIssuesOrWorklog";
-			this.dataGridIssuesOrWorklog.Size = new System.Drawing.Size(513, 180);
+			this.dataGridIssuesOrWorklog.Size = new System.Drawing.Size(513, 226);
 			this.dataGridIssuesOrWorklog.TabIndex = 11;
 			// 
 			// TextBoxUser
 			// 
+			this.TextBoxUser.Enabled = false;
 			this.TextBoxUser.Location = new System.Drawing.Point(191, 110);
 			this.TextBoxUser.Name = "TextBoxUser";
 			this.TextBoxUser.Size = new System.Drawing.Size(140, 20);
@@ -129,7 +130,7 @@ namespace JiraSolution.DesktopApp
 			// progressBar1
 			// 
 			this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.progressBar1.Location = new System.Drawing.Point(14, 395);
+			this.progressBar1.Location = new System.Drawing.Point(13, 449);
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(513, 23);
 			this.progressBar1.TabIndex = 14;
@@ -157,9 +158,9 @@ namespace JiraSolution.DesktopApp
 			this.label3.AutoSize = true;
 			this.label3.Location = new System.Drawing.Point(3, 94);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(89, 13);
+			this.label3.Size = new System.Drawing.Size(148, 13);
 			this.label3.TabIndex = 17;
-			this.label3.Text = "Project (optional):";
+			this.label3.Text = "Project (empty for all projects):";
 			// 
 			// label4
 			// 
@@ -226,7 +227,7 @@ namespace JiraSolution.DesktopApp
 			this.panel1.Controls.Add(this.label6);
 			this.panel1.Controls.Add(this.Button);
 			this.panel1.Controls.Add(this.TextBoxPassword);
-			this.panel1.Location = new System.Drawing.Point(14, 13);
+			this.panel1.Location = new System.Drawing.Point(13, 21);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(513, 190);
 			this.panel1.TabIndex = 25;
@@ -264,20 +265,23 @@ namespace JiraSolution.DesktopApp
 			// panel2
 			// 
 			this.panel2.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.panel2.BackColor = System.Drawing.SystemColors.Control;
 			this.panel2.Controls.Add(this.panel1);
 			this.panel2.Controls.Add(this.dataGridIssuesOrWorklog);
 			this.panel2.Controls.Add(this.progressBar1);
-			this.panel2.Location = new System.Drawing.Point(17, 12);
+			this.panel2.Location = new System.Drawing.Point(9, 4);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(532, 430);
+			this.panel2.Size = new System.Drawing.Size(531, 487);
 			this.panel2.TabIndex = 26;
 			// 
 			// JiraWorklogApp
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSize = true;
+			this.BackColor = System.Drawing.SystemColors.Control;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.ClientSize = new System.Drawing.Size(561, 460);
+			this.ClientSize = new System.Drawing.Size(557, 500);
 			this.Controls.Add(this.panel2);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "JiraWorklogApp";

@@ -85,39 +85,61 @@ namespace JiraSolution.DesktopApp
 			backgroundWorker1.WorkerSupportsCancellation = true;
 			backgroundWorker1.ReportProgress(0);
 
-			var restQueryResult = Requester.GetIssues(_url, 0);
-			
-			if (!string.IsNullOrEmpty(restQueryResult))
+			string projects = "";
+
+			if (string.IsNullOrEmpty(Requester.ProjectName))
 			{
-				var maxIssues = Convert.ToInt32(QueryResultReader.FindValuesInRestQueryResult("total", restQueryResult));
-				var maxResults = Convert.ToInt32(QueryResultReader.FindValuesInRestQueryResult("maxResults", restQueryResult));
-
-				QueryResultReader.ProgressStep = maxIssues;
-				QueryResultReader.Progress = 0;
-
-				var startAt = 0;
-				var maxPages = (maxIssues + maxResults + 1) / maxResults;
-
-				for (var i = 0; i < maxPages; i++)
+				projects = Requester.GetProjects(_url);
+				Requester.ProjectName = QueryResultReader.FindValuesInRestQueryResult("key", projects);
+			}
+			
+			while (!string.IsNullOrEmpty(Requester.ProjectName))
+			{
+				if (Requester.ProjectName == "DEMOFORM")
 				{
-					_users = QueryResultReader.ReadUsers(restQueryResult, _users, _url, backgroundWorker1);
+					projects = projects.Substring(projects.IndexOf("simplified", StringComparison.Ordinal) + 7);
+					Requester.ProjectName = QueryResultReader.FindValuesInRestQueryResult("key", projects);
+					continue;
+				}
 
-					if (_users == null)
+				var restQueryResult = Requester.GetIssues(_url, 0);
+
+				if (!string.IsNullOrEmpty(restQueryResult))
+				{
+					var maxIssues = Convert.ToInt32(QueryResultReader.FindValuesInRestQueryResult("total", restQueryResult));
+					var maxResults = Convert.ToInt32(QueryResultReader.FindValuesInRestQueryResult("maxResults", restQueryResult));
+
+					QueryResultReader.ProgressStep = maxIssues;
+					QueryResultReader.Progress = 0;
+
+					var startAt = 0;
+					var maxPages = (maxIssues + maxResults + 1) / maxResults;
+
+					for (var i = 0; i < maxPages; i++)
 					{
-						e.Cancel = true;
-						return;
-					}
+						_users = QueryResultReader.ReadUsers(restQueryResult, _users, _url, backgroundWorker1);
 
-					_users.ForEach(x => x.UpdateTotalWorklog());
+						if (_users == null)
+						{
+							e.Cancel = true;
+							return;
+						}
 
-					if (startAt + maxResults < maxIssues)
-					{
-						startAt += maxResults;
-						restQueryResult = Requester.GetIssues(_url, startAt);
-						// _users = QueryResultReader.ReadUsers(restQueryResult, _users, _url, backgroundWorker1);
+						_users.ForEach(x => x.UpdateTotalWorklog());
+
+						if (startAt + maxResults < maxIssues)
+						{
+							startAt += maxResults;
+							restQueryResult = Requester.GetIssues(_url, startAt);
+							// _users = QueryResultReader.ReadUsers(restQueryResult, _users, _url, backgroundWorker1);
+						}
 					}
 				}
+
+				projects = projects.Substring(projects.IndexOf("simplified", StringComparison.Ordinal) + 7);
+				Requester.ProjectName = QueryResultReader.FindValuesInRestQueryResult("key", projects);
 			}
+
 		}
 
 		private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -141,11 +163,13 @@ namespace JiraSolution.DesktopApp
 				{
 					DataGridEditor.PopulateDataGrid(dataGridIssuesOrWorklog, _users);
 					DataGridEditor.RemoveColumn(dataGridIssuesOrWorklog, "Worklogs");
-					progressBar1.Value = progressBar1.Maximum;
 				}
 			Cursor.Current = Cursors.Default;
-			
+
+			progressBar1.Value = progressBar1.Maximum;
+
 			MessageBox.Show("Operation conluded with success!", "INFO");
+			Requester.ProjectName = "";
 		}
 	}
 }

@@ -10,16 +10,18 @@ namespace JiraSolution.Domain.Objects
 		public Dictionary<string, List<int>> Worklogs { get; set; }
 		//public string Link { get; set; }
 
-		public int TotalWorklog { get; set; } // Must be public for DataGridView
+		public string TotalWorklog { get; set; } // Must be public for DataGridView
 
 		public void UpdateTotalWorklog()
 		{
+			var total = 0;
+
 			foreach (var worklogs in Worklogs.Values)
 			foreach (var worklog in worklogs)
-				TotalWorklog += worklog;
+				total += worklog;
 
 
-			TotalWorklog = TotalWorklog /3600;
+			TotalWorklog = (total /3600) + "h " + (total%3600)*60/3600 + "m ";
 		}
 	}
 }
